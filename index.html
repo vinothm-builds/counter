@@ -1,0 +1,47 @@
+<table>
+    <tr>
+        <td>Text Field</td>
+        <td><textarea id="inputField" placeholder="Start typing..."></textarea></td>
+    </tr>
+    <tr>
+        <td></td>
+        <!-- This is where the numbers will update live -->
+        <td id="counterText">0 / 200 characters</td>
+    </tr>
+    <!-- 🆕 1. ADDED ROW: An empty space to show the red warning text -->
+    <tr>
+        <td></td>
+        <td id="warningMessage" style="color: red; font-weight: bold; font-size: 13px;"></td>
+    </tr>
+</table>
+
+<script>
+    // Grab the elements
+    var inputField = document.getElementById("inputField");
+    var counterText = document.getElementById("counterText");
+    var warningMessage = document.getElementById("warningMessage"); // 🆕 Grabbed the new warning element
+
+    // The instruction manual for counting
+    function updateCount() {
+        var currentLength = inputField.value.length;
+        counterText.textContent = currentLength + " / 200 characters";
+
+        // Check if the text goes over the 200 limit
+        if (currentLength >= 200) {
+            // Cut the text box down to exactly 200 characters so they can't type more
+            inputField.value = inputField.value.substring(0, 200);
+            
+            // Lock the text display at 200
+            counterText.textContent = "200 / 200 characters";
+
+            // 🆕 2. Show the warning message when limit is reached
+            warningMessage.textContent = "Warning: You have reached the maximum character limit!";
+        } else {
+            // 🆕 3. Clear the warning message if they press backspace and go under 200
+            warningMessage.textContent = "";
+        }
+    }
+
+    // Run the counting loop every time the user types
+    inputField.addEventListener("input", updateCount);
+</script>
